@@ -1,0 +1,124 @@
+.shopping-management {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.shopping-title {
+    color: #38bdf8;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.product-card {
+    background: rgba(30, 41, 59, 0.8);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border: 1px solid #334155;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    border-color: #38bdf8;
+    box-shadow: 0 8px 25px rgba(56, 189, 248, 0.15);
+}
+
+.product-info {
+    flex-grow: 1;
+}
+
+.product-info h3 {
+    color: #38bdf8;
+    margin: 0 0 15px 0;
+    font-size: 1.5rem;
+}
+
+.product-info .description {
+    color: #94a3b8;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.product-info .price {
+    color: #4ade80;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.product-info .stock {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+
+.add-to-cart-button {
+    background: #38bdf8;
+    color: #0f172a;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    font-size: 1rem;
+}
+
+.add-to-cart-button:hover {
+    background: #0ea5e9;
+    transform: translateY(-2px);
+}
+
+.error-message {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border: 1px solid #ef4444;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Loading state styles */
+.loading {
+    text-align: center;
+    color: #38bdf8;
+    font-size: 1.2rem;
+    margin: 40px 0;
+}
+
+/* Empty state styles */
+.no-products {
+    text-align: center;
+    color: #94a3b8;
+    padding: 40px;
+    background: rgba(30, 41, 59, 0.8);
+    border-radius: 15px;
+    margin: 20px 0;
+}
+
+.place-order-button:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.loading {
+    opacity: 0.7;
+    pointer-events: none;
+} 
