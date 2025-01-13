@@ -13,9 +13,13 @@ const PetComponent = ({ userId }) => {
     const [isSterile, setIsSterile] = useState(false);
     const [allergies, setAllergies] = useState('');
     const [editId, setEditId] = useState(null);
+    const [speciesStats, setSpeciesStats] = useState([]);
+    const [commonSpecies, setCommonSpecies] = useState([]);
 
     useEffect(() => {
         fetchPets();
+        fetchSpeciesStats();
+        fetchCommonSpecies();
     }, [userId]);
 
     const fetchPets = async () => {
@@ -25,6 +29,26 @@ const PetComponent = ({ userId }) => {
             console.log('Fetched pets:', response.data);
         } catch (error) {
             console.error('Error fetching pets:', error);
+        }
+    };
+
+    const fetchSpeciesStats = async () => {
+        try {
+            const response = await axios.get('http://localhost:8080/api/pets/species-count/intersect');
+            console.log('Species stats:', response.data);
+            setSpeciesStats(response.data);
+        } catch (error) {
+            console.error('Error fetching species stats:', error);
+        }
+    };
+
+    const fetchCommonSpecies = async () => {
+        try {
+            const response = await axios.get('http://localhost:8080/api/pets/species-count/intersect');
+            console.log('Common species:', response.data);
+            setCommonSpecies(response.data);
+        } catch (error) {
+            console.error('Error fetching common species:', error);
         }
     };
 
@@ -181,6 +205,37 @@ const PetComponent = ({ userId }) => {
                             </button>
                         </div>
                     </form>
+                </div>
+            )}
+
+            {speciesStats.length > 0 && (
+                <div className="species-stats">
+                    <h3>Popular Pet Species</h3>
+                    <div className="stats-container">
+                        {speciesStats.map((species, index) => (
+                            <div key={index} className="species-stat-card">
+                                <i className="fas fa-paw"></i>
+                                <span>{species}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            {commonSpecies.length > 0 && (
+                <div className="common-species-container">
+                    <div className="common-species-header">
+                        <h3>Popular Dog Breeds</h3>
+                        <p>Breeds with multiple pets registered</p>
+                    </div>
+                    <div className="common-species-list">
+                        {commonSpecies.map((species, index) => (
+                            <div key={index} className="species-badge">
+                                <i className="fas fa-dog"></i>
+                                <span>{species}</span>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             )}
 

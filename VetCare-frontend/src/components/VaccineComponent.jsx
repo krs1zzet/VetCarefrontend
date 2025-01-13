@@ -64,8 +64,8 @@ const VaccineComponent = ({ userId }) => {
 
     const fetchPetVaccines = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/api/pet-vaccines-view');
-            console.log('Pet vaccines view data structure:', response.data);
+            const response = await axios.get('http://localhost:8080/api/pet-vaccines/view');
+            console.log('Pet vaccines view data:', response.data);
             setPetVaccines(response.data);
         } catch (error) {
             console.error('Error fetching pet vaccines:', error);
@@ -107,18 +107,18 @@ const VaccineComponent = ({ userId }) => {
         }
     };
 
-    const deletePetVaccine = async (petVaccine) => {
-        if (!petVaccine) {
-            console.error('Invalid pet vaccine data');
+    const deletePetVaccine = async (id) => {
+        if (!id) {
+            console.error('Invalid pet vaccine ID');
             return;
         }
 
-        console.log('Deleting pet vaccine:', petVaccine);
+        console.log('Deleting pet vaccine with ID:', id);
 
         if (window.confirm('Are you sure you want to delete this vaccination record?')) {
             try {
-                const response = await axios.delete(`http://localhost:8080/api/pet-vaccines/${petVaccine.petId}/${petVaccine.vaccineId}`);
-                console.log('Delete response:', response);
+                await axios.delete(`http://localhost:8080/api/pet-vaccines/${id}`);
+                console.log('Successfully deleted pet vaccine');
                 fetchPetVaccines();
             } catch (error) {
                 console.error('Error deleting pet vaccine:', error);
@@ -228,28 +228,23 @@ const VaccineComponent = ({ userId }) => {
                     </div>
                 ) : (
                     petVaccines.map(petVaccine => {
-                        const vaccine = vaccines.find(v => v.id === petVaccine.vaccineId);
-                        const remainingDoses = vaccine ? vaccine.count - petVaccine.count : 0;
+                        const remainingDoses = petVaccine.vaccine.count - petVaccine.count;
 
                         return (
-                            <div key={`${petVaccine.petId}-${petVaccine.vaccineId}`} className="vaccine-card">
+                            <div key={`${petVaccine.pet.id}-${petVaccine.vaccine.id}`} className="vaccine-card">
                                 <div className="vaccine-info">
-                                    <h4>{petVaccine.petName} - {petVaccine.vaccineName}</h4>
+                                    <h4>{petVaccine.pet.name} - {petVaccine.vaccine.name}</h4>
                                     <p><strong>Last Dose:</strong> {formatDate(petVaccine.date)}</p>
                                     <p><strong>Next Dose:</strong> {formatDate(petVaccine.nextDate)}</p>
-                                    <p><strong>Current Dose:</strong> {petVaccine.count} of {vaccine?.count || '?'}</p>
-                                    {vaccine && (
-                                        <>
-                                            {remainingDoses > 0 ? (
-                                                <p className="remaining-doses">
-                                                    {remainingDoses} doses remaining (every {vaccine.periodDay} days)
-                                                </p>
-                                            ) : (
-                                                <p className="completed-vaccine">
-                                                    Vaccination completed
-                                                </p>
-                                            )}
-                                        </>
+                                    <p><strong>Current Dose:</strong> {petVaccine.count} of {petVaccine.vaccine.count}</p>
+                                    {remainingDoses > 0 ? (
+                                        <p className="remaining-doses">
+                                            {remainingDoses} doses remaining (every {petVaccine.vaccine.periodDay} days)
+                                        </p>
+                                    ) : (
+                                        <p className="completed-vaccine">
+                                            Vaccination completed
+                                        </p>
                                     )}
                                 </div>
                                 <div className="vaccine-card-actions">
@@ -263,7 +258,7 @@ const VaccineComponent = ({ userId }) => {
                                     )}
                                     <button 
                                         className="delete-button"
-                                        onClick={() => deletePetVaccine(petVaccine)}
+                                        onClick={() => deletePetVaccine(petVaccine.id)}
                                     >
                                         Delete
                                     </button>

@@ -116,4 +116,50 @@
 .pet-card-actions button:last-child {
     background-color: #dc3545;
     color: white;
+}
+
+.common-species-container {
+    background: rgba(30, 41, 59, 0.8);
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    border: 1px solid #334155;
+}
+
+.common-species-header {
+    margin-bottom: 15px;
+}
+
+.common-species-header h3 {
+    color: #38bdf8;
+    margin-bottom: 5px;
+}
+
+.common-species-header p {
+    color: #94a3b8;
+    font-size: 0.9rem;
+}
+
+.common-species-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.species-badge {
+    background: #1e293b;
+    padding: 8px 16px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid #38bdf8;
+}
+
+.species-badge i {
+    color: #38bdf8;
+}
+
+.species-badge span {
+    color: #e2e8f0;
 } 
